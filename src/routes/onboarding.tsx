@@ -35,16 +35,42 @@ function OnboardingPage() {
     e.preventDefault();
     if (!user) return;
     setBusy(true);
-    const { error } = await supabase.from("clientes").insert({
+    const normalizedWa = normalizeWhatsapp(whatsapp);
+
+// Buscar si ya existe un cliente con este número
+const { data: existing } = await supabase
+  .from("clientes")
+  .select("id")
+  .eq("whatsapp", normalizedWa)
+  .is("user_id", null)
+  .maybeSingle();
+
+let error;
+if (existing) {
+  // Ya existe (registrado por el bot) → solo vincular
+  ({ error } = await supabase
+    .from("clientes")
+    .update({
       user_id: user.id,
       nombres,
       apellidos,
       cedula,
-      whatsapp: normalizeWhatsapp(whatsapp),
       direccion: direccion || null,
-      estado: "Activo",
-      fecha_afiliacion: new Date().toISOString().slice(0, 10),
-    });
+    })
+    .eq("id", existing.id));
+} else {
+  // No existe → crear nuevo
+  ({ error } = await supabase.from("clientes").insert({
+    user_id: user.id,
+    nombres,
+    apellidos,
+    cedula,
+    whatsapp: normalizedWa,
+    direccion: direccion || null,
+    estado: "Activo",
+    fecha_afiliacion: new Date().toISOString().slice(0, 10),
+  }));
+}
     setBusy(false);
     if (error) return toast.error(error.message);
     toast.success(t("profileUpdated"));
