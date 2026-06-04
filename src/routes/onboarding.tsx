@@ -32,10 +32,14 @@ function OnboardingPage() {
   }, [user, cliente, loading, navigate]);
 
   const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!user) return;
-    setBusy(true);
-    const normalizedWa = normalizeWhatsapp(whatsapp);
+  e.preventDefault();
+  if (!user) return;
+
+  const raw = whatsapp.replace(/\D/g, "");
+  if (raw.length < 10) return toast.error("Ingresa un número válido");
+
+  setBusy(true);
+  const normalizedWa = normalizeWhatsapp(whatsapp);
 
 // Buscar si ya existe un cliente con este número
 const { data: existing } = await supabase
@@ -100,6 +104,11 @@ if (existing) {
         <div className="space-y-1.5">
           <Label htmlFor="w">{t("whatsapp")}</Label>
           <Input id="w" type="tel" required value={whatsapp} onChange={(e) => setWhatsapp(e.target.value)} />
+          {whatsapp && (
+            <p className="text-xs text-muted-foreground">
+              Número a guardar: <span className="text-foreground font-mono">{normalizeWhatsapp(whatsapp)}</span>
+            </p>
+        )}
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="d">{t("address")}</Label>
