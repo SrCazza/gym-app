@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/PasswordInput";
 
 export const Route = createFileRoute("/reset-password")({
-  head: () => ({ meta: [{ title: "Recuperar contraseña · GymCuenca" }] }),
+  head: () => ({ meta: [{ title: "Recuperar contraseña · KLANBARZ" }] }),
   component: ResetPage,
 });
 

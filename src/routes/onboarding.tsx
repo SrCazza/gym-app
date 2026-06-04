@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/onboarding")({
-  head: () => ({ meta: [{ title: "Completa tu perfil · GymCuenca" }] }),
+  head: () => ({ meta: [{ title: "Completa tu perfil · KLANBARZ" }] }),
   component: OnboardingPage,
 });
 

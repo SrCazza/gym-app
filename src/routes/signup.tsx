@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/PasswordInput";
 
 export const Route = createFileRoute("/signup")({
-  head: () => ({ meta: [{ title: "Crear cuenta · GymCuenca" }] }),
+  head: () => ({ meta: [{ title: "Crear cuenta · KLANBARZ" }] }),
   component: SignupPage,
 });
 

@@ -4,7 +4,7 @@ type Lang = "es" | "en";
 
 const dict = {
   es: {
-    appName: "GymCuenca",
+    appName: "KLANBARZ",
     save: "Guardar",
     cancel: "Cancelar",
     loading: "Cargando…",
@@ -106,7 +106,7 @@ const dict = {
     error: "Ocurrió un error",
   },
   en: {
-    appName: "GymCuenca",
+    appName: "KLANBARZ",
     save: "Save",
     cancel: "Cancel",
     loading: "Loading…",
@@ -219,13 +219,13 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const saved = window.localStorage.getItem("gymcuenca.lang");
+    const saved = window.localStorage.getItem("klanbarz.lang");
     if (saved === "en" || saved === "es") setLangState(saved);
   }, []);
 
   const setLang = useCallback((l: Lang) => {
     setLangState(l);
-    if (typeof window !== "undefined") window.localStorage.setItem("gymcuenca.lang", l);
+    if (typeof window !== "undefined") window.localStorage.setItem("klanbarz.lang", l);
   }, []);
 
   const t = useCallback((k: TKey) => dict[lang][k] ?? k, [lang]);

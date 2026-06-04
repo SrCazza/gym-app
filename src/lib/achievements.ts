@@ -74,7 +74,7 @@ export function computeAchievements(reservas: ReservaForAch[], lang: "es" | "en"
         semanaCompleta: { n: "Semana completa", d: "Lunes a viernes en una semana" },
         mes: { n: "Mes constante", d: "3 semanas del mes con 3+ reservas" },
         cincuenta: { n: "50 clases", d: "Llegaste a 50 reservas" },
-        leyenda: { n: "Leyenda del gym", d: "Llegaste a 100 reservas" },
+        leyenda: { n: "Leyenda de KLANBARZ", d: "Llegaste a 100 reservas" },
       }
     : {
         primera: { n: "First class", d: "You booked your first class" },
@@ -84,7 +84,7 @@ export function computeAchievements(reservas: ReservaForAch[], lang: "es" | "en"
         semanaCompleta: { n: "Full week", d: "Monday to Friday in one week" },
         mes: { n: "Steady month", d: "3 weeks in a month with 3+ bookings each" },
         cincuenta: { n: "50 classes", d: "Reached 50 bookings" },
-        leyenda: { n: "Gym legend", d: "Reached 100 bookings" },
+        leyenda: { n: "KLANBARZ legend", d: "Reached 100 bookings" },
       };
 
   const fifth = active[4] ?? null;
