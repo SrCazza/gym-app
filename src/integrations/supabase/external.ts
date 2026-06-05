@@ -4,9 +4,8 @@
 // never put a service role key in this file.
 import { createClient } from "@supabase/supabase-js";
 
-const EXTERNAL_SUPABASE_URL = "https://qaqbrhnmforncwlgbavv.supabase.co";
-const EXTERNAL_SUPABASE_ANON_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFhcWJyaG5tZm9ybmN3bGdiYXZ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyMDkzMjUsImV4cCI6MjA5NDc4NTMyNX0.Wy7SdIqdCXMc4VUEhEIEn5CF92irODc8bxkW9zKMo3o";
+const EXTERNAL_SUPABASE_URL = import.meta.env.VITE_EXTERNAL_SUPABASE_URL as string;
+const EXTERNAL_SUPABASE_ANON_KEY = import.meta.env.VITE_EXTERNAL_SUPABASE_ANON_KEY as string;
 
 export const supabaseExternal = createClient(
   EXTERNAL_SUPABASE_URL,

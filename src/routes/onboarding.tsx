@@ -44,13 +44,18 @@ function OnboardingPage() {
 // Buscar si ya existe un cliente con este número
 const { data: existing } = await supabase
   .from("clientes")
-  .select("id")
+  .select("id, cedula")
   .eq("whatsapp", normalizedWa)
   .is("user_id", null)
   .maybeSingle();
 
 let error;
 if (existing) {
+  // Verificar cédula para prevenir toma de cuenta ajena
+  if (existing.cedula && existing.cedula !== cedula) {
+    setBusy(false);
+    return toast.error(t("waMismatch"));
+  }
   // Ya existe (registrado por el bot) → solo vincular
   ({ error } = await supabase
     .from("clientes")

@@ -101,7 +101,8 @@ function RutinaPage() {
       const { error } = await supabase
         .from("rutinas")
         .update({ completado: !r.completado })
-        .eq("id", r.id);
+        .eq("id", r.id)
+        .eq("cliente_id", cliente!.id);
       if (error) throw error;
     },
     onSuccess: () => {
@@ -113,7 +114,7 @@ function RutinaPage() {
 
   const remove = useMutation({
     mutationFn: async (id: number) => {
-      const { error } = await supabase.from("rutinas").delete().eq("id", id);
+      const { error } = await supabase.from("rutinas").delete().eq("id", id).eq("cliente_id", cliente!.id);
       if (error) throw error;
     },
     onSuccess: () => {

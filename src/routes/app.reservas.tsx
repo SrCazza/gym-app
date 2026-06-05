@@ -84,7 +84,7 @@ function ReservasPage() {
 
   const cancelar = useMutation({
     mutationFn: async (id: number) => {
-      const { error } = await supabase.from("reservas").update({ estado: "cancelado" }).eq("id", id);
+      const { error } = await supabase.from("reservas").update({ estado: "cancelado" }).eq("id", id).eq("cliente_id", cliente!.id);
       if (error) throw error;
     },
     onSuccess: () => {

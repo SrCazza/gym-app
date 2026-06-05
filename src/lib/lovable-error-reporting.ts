@@ -24,7 +24,9 @@ export function reportLovableError(error: unknown, context: Record<string, unkno
     error,
     {
       source: "react_error_boundary",
-      route: window.location.pathname,
+      route: window.location.pathname
+        .replace(/\/[0-9a-f-]{36}/g, "/:uuid")
+        .replace(/\/\d+/g, "/:id"),
       ...context,
     },
     {

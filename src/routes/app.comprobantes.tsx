@@ -24,6 +24,9 @@ type Comprobante = {
   created_at: string | null;
 };
 
+const ALLOWED_UPLOAD_TYPES = ["image/jpeg", "image/png", "image/webp", "application/pdf"];
+const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
+
 function statusVariant(s?: string | null): "default" | "secondary" | "destructive" | "outline" {
   const v = (s ?? "").toLowerCase();
   if (v.includes("aprob")) return "default";
@@ -56,7 +59,6 @@ function ComprobantesPage() {
   const enviar = useMutation({
     mutationFn: async () => {
       if (!file) throw new Error("Sin archivo");
-      console.log("[comprobantes] start upload", { name: file.name, size: file.size, type: file.type });
 
       const { data: auth, error: authErr } = await supabase.auth.getUser();
       if (authErr) {
@@ -65,7 +67,6 @@ function ComprobantesPage() {
       }
       const uid = auth.user?.id;
       if (!uid) throw new Error("[auth] Sin sesión");
-      console.log("[comprobantes] uid", uid);
 
       const { data: cli, error: cliErr } = await supabase
         .from("clientes")
@@ -77,11 +78,9 @@ function ComprobantesPage() {
         throw new Error(`[clientes] ${cliErr?.message ?? "Sin perfil"}`);
       }
       const clienteId = cli.id as number;
-      console.log("[comprobantes] clienteId", clienteId);
 
       const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
       const path = `${clienteId}/${Date.now()}_${safeName}`;
-      console.log("[comprobantes] storage path", path);
 
       const up = await supabase.storage.from("comprobantes").upload(path, file, {
         cacheControl: "3600",
@@ -91,26 +90,20 @@ function ComprobantesPage() {
         console.error("[comprobantes] storage upload error", up.error);
         throw new Error(`[storage] ${up.error.message}`);
       }
-      console.log("[comprobantes] storage uploaded", up.data);
 
       const { data: pub } = supabase.storage.from("comprobantes").getPublicUrl(up.data.path);
-      console.log("[comprobantes] public url", pub.publicUrl);
 
-      const { error: insErr, data: insData } = await supabase
+      const { error: insErr } = await supabase
         .from("comprobantes")
         .insert({
           cliente_id: clienteId,
           url_imagen: pub.publicUrl,
           estado: "pendiente",
-        })
-        .select();
+        });
       if (insErr) {
         console.error("[comprobantes] db insert error", insErr);
-        throw new Error(
-          `[db insert] ${insErr.message}${insErr.details ? ` — ${insErr.details}` : ""}${insErr.hint ? ` (${insErr.hint})` : ""}`,
-        );
+        throw new Error(t("uploadError"));
       }
-      console.log("[comprobantes] inserted", insData);
     },
 
     onSuccess: () => {
@@ -141,7 +134,22 @@ function ComprobantesPage() {
               ref={fileRef}
               type="file"
               accept="image/*,application/pdf"
-              onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+              onChange={(e) => {
+                const f = e.target.files?.[0] ?? null;
+                if (f) {
+                  if (!ALLOWED_UPLOAD_TYPES.includes(f.type)) {
+                    toast.error(t("invalidFileType"));
+                    e.target.value = "";
+                    return;
+                  }
+                  if (f.size > MAX_UPLOAD_BYTES) {
+                    toast.error(t("fileTooLarge"));
+                    e.target.value = "";
+                    return;
+                  }
+                }
+                setFile(f);
+              }}
               required
             />
           </div>

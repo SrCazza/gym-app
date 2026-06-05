@@ -5,4 +5,5 @@ export default defineConfig({
     server: { entry: "server" },
   },
   nitro: true,
+  build: { sourcemap: false },
 });

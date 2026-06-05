@@ -22,10 +22,10 @@ function ResetPage() {
   const [sent, setSent] = useState(false);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (window.location.hash.includes("type=recovery")) {
-      setRecovery(true);
-    }
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "PASSWORD_RECOVERY") setRecovery(true);
+    });
+    return () => subscription.unsubscribe();
   }, []);
 
   const sendLink = async (e: React.FormEvent) => {
@@ -56,7 +56,7 @@ function ResetPage() {
         <form onSubmit={updatePassword} className="mt-8 space-y-4">
           <div className="space-y-1.5">
             <Label htmlFor="np">{t("newPassword")}</Label>
-            <PasswordInput id="np" required minLength={6} value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
+            <PasswordInput id="np" required minLength={8} value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
           </div>
           <Button type="submit" className="w-full" disabled={busy}>
             {t("updatePassword")}

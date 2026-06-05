@@ -120,6 +120,10 @@ const dict = {
     reps: "Reps",
     weightLabel: "Peso",
     notes: "Notas",
+    waMismatch: "El número de WhatsApp no coincide con los datos registrados",
+    invalidFileType: "Tipo de archivo no permitido. Solo imágenes (JPG, PNG, WebP) y PDF",
+    fileTooLarge: "El archivo supera el límite de 10 MB",
+    uploadError: "Error al guardar el comprobante. Intenta de nuevo",
   },
   en: {
     appName: "KLANBARZ",
@@ -238,6 +242,10 @@ const dict = {
     reps: "Reps",
     weightLabel: "Weight",
     notes: "Notes",
+    waMismatch: "WhatsApp number does not match your registered data",
+    invalidFileType: "File type not allowed. Only images (JPG, PNG, WebP) and PDF",
+    fileTooLarge: "File exceeds the 10 MB limit",
+    uploadError: "Error saving receipt. Please try again",
   },
 } as const;
 

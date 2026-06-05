@@ -76,7 +76,7 @@ function SignupPage() {
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="password">{t("password")}</Label>
-          <PasswordInput id="password" autoComplete="new-password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} />
+          <PasswordInput id="password" autoComplete="new-password" required minLength={8} value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
         <Button type="submit" className="w-full" disabled={busy}>
           {busy ? t("loading") : t("signup")}
