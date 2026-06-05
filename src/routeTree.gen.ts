@@ -20,6 +20,7 @@ import { Route as AppRutinaRouteImport } from './routes/app.rutina'
 import { Route as AppReservasRouteImport } from './routes/app.reservas'
 import { Route as AppPerfilRouteImport } from './routes/app.perfil'
 import { Route as AppMedidasRouteImport } from './routes/app.medidas'
+import { Route as AppRendimientoRouteImport } from './routes/app.rendimiento'
 import { Route as AppComprobantesRouteImport } from './routes/app.comprobantes'
 import { Route as AppClasesRouteImport } from './routes/app.clases'
 
@@ -78,6 +79,11 @@ const AppMedidasRoute = AppMedidasRouteImport.update({
   path: '/medidas',
   getParentRoute: () => AppRoute,
 } as any)
+const AppRendimientoRoute = AppRendimientoRouteImport.update({
+  id: '/rendimiento',
+  path: '/rendimiento',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppComprobantesRoute = AppComprobantesRouteImport.update({
   id: '/comprobantes',
   path: '/comprobantes',
@@ -100,6 +106,7 @@ export interface FileRoutesByFullPath {
   '/app/comprobantes': typeof AppComprobantesRoute
   '/app/medidas': typeof AppMedidasRoute
   '/app/perfil': typeof AppPerfilRoute
+  '/app/rendimiento': typeof AppRendimientoRoute
   '/app/reservas': typeof AppReservasRoute
   '/app/rutina': typeof AppRutinaRoute
   '/app/': typeof AppIndexRoute
@@ -114,6 +121,7 @@ export interface FileRoutesByTo {
   '/app/comprobantes': typeof AppComprobantesRoute
   '/app/medidas': typeof AppMedidasRoute
   '/app/perfil': typeof AppPerfilRoute
+  '/app/rendimiento': typeof AppRendimientoRoute
   '/app/reservas': typeof AppReservasRoute
   '/app/rutina': typeof AppRutinaRoute
   '/app': typeof AppIndexRoute
@@ -130,6 +138,7 @@ export interface FileRoutesById {
   '/app/comprobantes': typeof AppComprobantesRoute
   '/app/medidas': typeof AppMedidasRoute
   '/app/perfil': typeof AppPerfilRoute
+  '/app/rendimiento': typeof AppRendimientoRoute
   '/app/reservas': typeof AppReservasRoute
   '/app/rutina': typeof AppRutinaRoute
   '/app/': typeof AppIndexRoute
@@ -147,6 +156,7 @@ export interface FileRouteTypes {
     | '/app/comprobantes'
     | '/app/medidas'
     | '/app/perfil'
+    | '/app/rendimiento'
     | '/app/reservas'
     | '/app/rutina'
     | '/app/'
@@ -161,6 +171,7 @@ export interface FileRouteTypes {
     | '/app/comprobantes'
     | '/app/medidas'
     | '/app/perfil'
+    | '/app/rendimiento'
     | '/app/reservas'
     | '/app/rutina'
     | '/app'
@@ -176,6 +187,7 @@ export interface FileRouteTypes {
     | '/app/comprobantes'
     | '/app/medidas'
     | '/app/perfil'
+    | '/app/rendimiento'
     | '/app/reservas'
     | '/app/rutina'
     | '/app/'
@@ -269,6 +281,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppMedidasRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/rendimiento': {
+      id: '/app/rendimiento'
+      path: '/rendimiento'
+      fullPath: '/app/rendimiento'
+      preLoaderRoute: typeof AppRendimientoRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/comprobantes': {
       id: '/app/comprobantes'
       path: '/comprobantes'
@@ -291,6 +310,7 @@ interface AppRouteChildren {
   AppComprobantesRoute: typeof AppComprobantesRoute
   AppMedidasRoute: typeof AppMedidasRoute
   AppPerfilRoute: typeof AppPerfilRoute
+  AppRendimientoRoute: typeof AppRendimientoRoute
   AppReservasRoute: typeof AppReservasRoute
   AppRutinaRoute: typeof AppRutinaRoute
   AppIndexRoute: typeof AppIndexRoute
@@ -301,6 +321,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppComprobantesRoute: AppComprobantesRoute,
   AppMedidasRoute: AppMedidasRoute,
   AppPerfilRoute: AppPerfilRoute,
+  AppRendimientoRoute: AppRendimientoRoute,
   AppReservasRoute: AppReservasRoute,
   AppRutinaRoute: AppRutinaRoute,
   AppIndexRoute: AppIndexRoute,

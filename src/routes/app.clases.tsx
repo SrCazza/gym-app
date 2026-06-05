@@ -127,8 +127,8 @@ function ClasesPage() {
               key={w}
               type="button"
               onClick={() => setWhen(w)}
-              className={`rounded-xl px-4 py-2 text-sm font-medium transition-colors ${
-                when === w ? "bg-primary text-primary-foreground" : "text-muted-foreground"
+              className={`rounded-xl px-4 py-2 text-sm font-medium transition-all duration-200 ${
+                when === w ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
               }`}
             >
               {w === "hoy" ? t("today") : t("tomorrow")}

@@ -20,7 +20,10 @@ export function BottomNav() {
         {items.map(({ to, icon: Icon, label }) => {
           const active = pathname === to || (to !== "/app" && pathname.startsWith(to));
           return (
-            <li key={to}>
+            <li key={to} className="relative">
+              {active && (
+                <span className="absolute top-0 left-1/2 h-0.5 w-8 -translate-x-1/2 rounded-full bg-primary" />
+              )}
               <Link
                 to={to}
                 className={cn(
@@ -28,7 +31,14 @@ export function BottomNav() {
                   active ? "text-primary" : "text-muted-foreground hover:text-foreground",
                 )}
               >
-                <Icon className="h-5 w-5" strokeWidth={active ? 2.4 : 1.8} />
+                <div
+                  className={cn(
+                    "rounded-xl p-1 transition-colors",
+                    active ? "bg-primary/15" : "",
+                  )}
+                >
+                  <Icon className="h-5 w-5" strokeWidth={active ? 2.4 : 1.8} />
+                </div>
                 <span className="leading-none">{t(label)}</span>
               </Link>
             </li>

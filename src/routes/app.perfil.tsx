@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { LogOut, Globe, Receipt, Ruler } from "lucide-react";
+import { LogOut, Globe, Receipt, Ruler, TrendingUp } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 import { useI18n } from "@/lib/i18n";
 import { ScreenHeader } from "@/components/MobileShell";
@@ -48,6 +48,10 @@ function PerfilPage() {
           <Link to="/app/medidas" className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 hover:border-primary/40">
             <Ruler className="h-5 w-5 text-primary" />
             <span className="text-sm">{t("measurements")}</span>
+          </Link>
+          <Link to="/app/rendimiento" className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4 hover:border-primary/40">
+            <TrendingUp className="h-5 w-5 text-primary" />
+            <span className="text-sm">{t("performance")}</span>
           </Link>
           <button
             type="button"

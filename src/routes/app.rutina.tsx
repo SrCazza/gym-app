@@ -151,8 +151,8 @@ function RutinaPage() {
               key={w}
               type="button"
               onClick={() => setSemana(w)}
-              className={`rounded-xl px-2 py-2 text-sm font-medium transition-colors ${
-                semana === w ? "bg-primary text-primary-foreground" : "text-muted-foreground"
+              className={`rounded-xl px-2 py-2 text-sm font-medium transition-all duration-200 ${
+                semana === w ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
               }`}
             >
               {t("week")} {w}

@@ -100,6 +100,7 @@ function Dashboard() {
 
   const membershipActive = cliente?.estado === "Activo";
   const fullName = [cliente?.nombres, cliente?.apellidos].filter(Boolean).join(" ");
+  const firstName = cliente?.nombres?.split(" ")[0] ?? "";
 
   // Weekly streak (Mon-Sun) for current week
   const weekStart = startOfWeekMonday(today);
@@ -107,6 +108,7 @@ function Dashboard() {
   const reservedSet = new Set(
     (allReservas ?? []).filter((r) => r.estado === "reservado").map((r) => r.fecha),
   );
+  const reservedThisWeek = weekDays.filter((d) => reservedSet.has(d)).length;
   const dayLabels = ["L", "M", "X", "J", "V", "S", "D"];
 
   const achievements = computeAchievements(allReservas ?? [], lang);
@@ -115,13 +117,22 @@ function Dashboard() {
     <div>
       <ScreenHeader title={t("appName")} />
       <div className="space-y-5 p-4">
-        <div>
-          <p className="text-sm text-muted-foreground">{t("hello")},</p>
-          <h2 className="text-2xl font-semibold tracking-tight">{fullName || "—"}</h2>
+        <div className="space-y-1">
+          <p className="text-sm text-muted-foreground">{t("hello")}</p>
+          <h2 className="text-3xl font-bold tracking-tight">{firstName || fullName || "—"}</h2>
+          {cliente?.plan && (
+            <p className="text-xs font-medium uppercase tracking-widest text-primary/80">
+              {cliente.plan}
+            </p>
+          )}
         </div>
 
         {/* Membership */}
-        <div className="flex items-center gap-3 rounded-2xl border border-border bg-card p-4">
+        <div className={`flex items-center gap-3 rounded-2xl border p-4 transition-colors ${
+          membershipActive
+            ? "border-primary/30 bg-primary/5"
+            : "border-destructive/30 bg-destructive/5"
+        }`}>
           <div className={`rounded-full p-2 ${membershipActive ? "bg-primary/15 text-primary" : "bg-destructive/15 text-destructive"}`}>
             {membershipActive ? <BadgeCheck className="h-5 w-5" /> : <AlertCircle className="h-5 w-5" />}
           </div>
@@ -176,6 +187,9 @@ function Dashboard() {
               );
             })}
           </div>
+          <p className="mt-2 text-center text-xs text-muted-foreground">
+            {reservedThisWeek} / {weekDays.length} {t("dayProgress")}
+          </p>
         </div>
 
         {/* Achievements */}
@@ -245,9 +259,11 @@ function QuickAction({ to, icon, label }: { to: string; icon: React.ReactNode; l
   return (
     <Link
       to={to}
-      className="flex flex-col items-start gap-2 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-primary/40"
+      className="group flex flex-col items-start gap-2 rounded-2xl border border-border bg-card p-4 transition-colors hover:border-primary/40"
     >
-      <div className="rounded-full bg-primary/15 p-2 text-primary">{icon}</div>
+      <div className="rounded-full bg-primary/15 p-2 text-primary transition-colors group-hover:bg-primary/25">
+        {icon}
+      </div>
       <span className="text-sm font-medium">{label}</span>
     </Link>
   );
